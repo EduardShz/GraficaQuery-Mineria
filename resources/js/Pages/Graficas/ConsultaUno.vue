@@ -2,16 +2,19 @@
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import GraficaConsulta from '@/Components/GraficaConsulta.vue';
 import { computed } from 'vue';
+import { calcularEstadisticas } from '@/Utils/medidasTendenciaCentral';
 
 const props = defineProps({
-    consultaUno: {
+    data: {
         type: Object,
         required: true,
     },
 });
 
-const labels = computed(() => props.consultaUno.map(d => d.estado))
-const valores = computed(() => props.consultaUno.map(d => d.cantidad))
+const labels = computed(() => props.data.map(d => d.estado))
+const valores = computed(() => props.data.map(d => d.cantidad))
+
+const stats = computed(() => calcularEstadisticas(props.data.map(d => d.cantidad)))
 </script>
 
 <template>
@@ -23,6 +26,12 @@ const valores = computed(() => props.consultaUno.map(d => d.cantidad))
                 Consulta Número Uno
             </h1>
 
+            <div class="mt-4 p-4 bg-gray-100 rounded">
+                <h2 class="font-bold text-lg mb-2">Estadísticas</h2>
+                <p>Media: {{ stats.media.toFixed(2) }}</p>
+                <p>Mediana: {{ stats.mediana }}</p>
+                <p>Moda: {{ stats.moda.join(', ') }}</p>
+            </div>
 
             <div>
                 <br>

@@ -3,6 +3,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import GraficaAvanzada from '@/Components/GraficaAvanzada.vue';
 import { computed, ref } from 'vue';
 import { router } from '@inertiajs/vue3';
+import { calcularEstadisticas } from '@/Utils/medidasTendenciaCentral';
 
 const props = defineProps({
   data: {
@@ -47,6 +48,8 @@ const datasets = computed(() => [{
   backgroundColor: 'rgba(54, 162, 235, 0.6)',
   borderWidth: 1
 }])
+
+const stats = computed(() => calcularEstadisticas(props.data.map(d => d.cantidad)))
 </script>
 
 <template>
@@ -55,8 +58,16 @@ const datasets = computed(() => [{
       <ApplicationLogo class="block h-12 w-auto" />
 
       <h1 class="mt-8 text-2xl font-medium text-gray-900">
-        Municipios por Estado
+        Consulta Tres
       </h1>
+
+      <div class="mt-4 p-4 bg-gray-100 rounded">
+        <h2 class="font-bold text-lg mb-2">Estadísticas</h2>
+        <p>Media: {{ stats.media.toFixed(2) }}</p>
+        <p>Mediana: {{ stats.mediana }}</p>
+        <p v-if="stats.moda.length">Moda: {{ stats.moda.join(', ') }}</p>
+        <p v-else>Moda: No hay moda</p>
+      </div>
 
       <div class="mt-4 mb-6">
         <label for="estado" class="block mb-1 text-gray-700">Selecciona un estado:</label>
