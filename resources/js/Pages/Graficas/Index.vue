@@ -13,6 +13,9 @@ import ConsultaDiez from './ConsultaDiez.vue';
 import ConsultaOnce from './ConsultaOnce.vue';
 import ConsultaDoce from './ConsultaDoce.vue';
 import ConsultaTrece from './ConsultaTrece.vue';
+import ConsultaCatorce from './ConsultaCatorce.vue';
+import ConsultaQuince from './ConsultaQuince.vue';
+import ConsultaDieciseis from './ConsultaDieciseis.vue';
 
 const props = defineProps({
     estados: {
@@ -82,14 +85,6 @@ const props = defineProps({
         required: true,
     },
     consultaDieciseis: {
-        type: Array,
-        required: true,
-    },
-    consultaDiecisiete: {
-        type: Array,
-        required: true,
-    },
-    consultaDieciocho: {
         type: Array,
         required: true,
     },
@@ -205,6 +200,30 @@ const props = defineProps({
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <ConsultaTrece :data="consultaTrece" />
+                </div>
+            </div>
+        </div>
+
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <ConsultaCatorce :data="consultaCatorce" />
+                </div>
+            </div>
+        </div>
+
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <ConsultaQuince :data="consultaQuince" />
+                </div>
+            </div>
+        </div>
+
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <ConsultaDieciseis :data="consultaDieciseis" />
                 </div>
             </div>
         </div>

@@ -169,6 +169,44 @@ class GraficasController extends Controller
         group by month(dv.fecha_hora_salida), datename(month, dv.fecha_hora_salida)
         order by month(dv.fecha_hora_salida)
         ");
+        $consultaCatorce = DB::select("
+        Select top 10 with ties 
+            m.nombre as municipio,
+            e.nombre as estado, 
+            COUNT(*) as cantidad 
+        from ocupaciones as o
+            inner join clientes as c on o.cve_clientes=c.cve_clientes
+            inner join municipios as m on c.cve_municipios = m.cve_municipios and c.cve_estados = m.cve_estados
+            inner join estados as e on c.cve_estados=e.cve_estados
+        group by m.nombre, e.nombre
+        order by COUNT(*) desc
+        ");
+        $consultaQuince = DB::select("
+        Select top 10 with ties 
+            m.nombre as municipio,
+            e.nombre as estado, 
+            COUNT(*) as cantidad
+        from ocupaciones as o
+            inner join clientes as c on o.cve_clientes=c.cve_clientes
+            inner join municipios as m on c.cve_municipios = m.cve_municipios and c.cve_estados = m.cve_estados
+            inner join estados as e on c.cve_estados=e.cve_estados
+        group by m.nombre, e.nombre
+        order by COUNT(*) asc
+        ");
+        $consultaDieciseis = DB::select("
+        Select top 1 with ties
+            a.nombre as aereopuerto,
+            c.nombre as ciudad,
+            p.nombre as pais,
+            count(*) as cantidad
+        from detalles_vuelos as dv
+            inner join vuelos as v on dv.cve_vuelos=v.cve_vuelos
+            inner join aeropuertos as a on v.cve_aeropuertos__origen=a.cve_aeropuertos
+            inner join ciudades as c on a.cve_ciudades=c.cve_ciudades
+            inner join paises as p on c.cve_paises=p.cve_paises
+        group by a.nombre, c.nombre, p.nombre
+        order by COUNT(*) asc
+        ");
 
         return inertia('Graficas/Index', [
             'estados' => $estados,
@@ -186,11 +224,9 @@ class GraficasController extends Controller
             'consultaOnce' => $consultaOnce,
             'consultaDoce' => $consultaDoce,
             'consultaTrece' => $consultaTrece,
-            'consultaCatorce' => $consultaSiete,
-            'consultaQuince' => $consultaOcho,
-            'consultaDieciseis' => $consultaNueve,
-            'consultaDiecisiete' => $consultaDiez,
-            'consultaDieciocho' => $consultaDiez,
+            'consultaCatorce' => $consultaCatorce,
+            'consultaQuince' => $consultaQuince,
+            'consultaDieciseis' => $consultaDieciseis,
         ]);
     }
 
